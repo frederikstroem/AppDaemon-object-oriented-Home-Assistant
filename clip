@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+function psourcerer() {
+    local dir=$1
+    shift
+    cd "$dir"
+    if [ $# -eq 0 ]; then
+        output+=$(psource .)
+    else
+        for file in "$@"; do
+            output+=$(psource "$file")
+        done
+    fi
+    output+=$'\n\n\n'
+    cd - > /dev/null
+}
+
+# Store the current script directory
+script_dir="$(dirname "$0")"
+
+output=""
+cd "$script_dir"
+
+#
+# HERE BE DRAGONS
+#
+
+# Do the magic
+psourcerer "apps/helper/entities/controllers"
+psourcerer "apps/helper/entities" "controller.py" "entity.py"
+
+#
+# END OF DRAGONS
+#
+
+# Replace env.example.h with env.h in output variable
+output=${output//env.example.h/env.h}
+
+# Replace /home/<username> with nothing
+output=${output//\/home\/$USER/}
+
+# Output to clipboard
+echo -n "$output" | xsel -ib

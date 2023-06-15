@@ -1,0 +1,53 @@
+---
+secrets: /config/secrets.yaml
+appdaemon:
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
+  time_zone: Europe/Copenhagen
+  plugins:
+    HASS:
+      type: hass
+http:
+  url: http://127.0.0.1:5050
+admin:
+api:
+hadashboard:
+
+logs:
+  # Defaults.
+  main_log:
+    filename: /config/logs/appdaemon/appdaemon.log
+    log_generations: 15
+  access_log:
+    filename: /config/logs/appdaemon/access.log
+    log_generations: 10
+  error_log:
+    filename: /config/logs/appdaemon/error.log
+    log_generations: 30
+  diag_log:
+    filename: /config/logs/appdaemon/diag.log
+    log_generations: 5
+    log_size: 1024
+    format: "{asctime} {levelname:<8} {appname:<10}: {message}"
+  # Custom.
+  home_log:
+    name: HomeLog
+    filename: /config/logs/appdaemon/home.log
+    log_generations: 5
+  lab_log:
+    name: LabLog
+    filename: /config/logs/appdaemon/lab.log
+    log_generations: 5
+  bedroom_log:
+    name: BedroomLog
+    filename: /config/logs/appdaemon/bedroom.log
+    log_generations: 5
+  up_log:
+    name: UpLog
+    filename: /config/logs/appdaemon/up.log
+    log_generations: 5
+  hall_log:
+    name: HallLog
+    filename: /config/logs/appdaemon/hall.log
+    log_generations: 5
